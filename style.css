@@ -4,6 +4,8 @@
 }
 body {
   background-color: rgb(37, 37, 37);
+  width: fit-content;
+  padding: 10px;
 }
 
 .cell {
@@ -29,7 +31,7 @@ body {
 }
 
 .right {
-  border: 1px solid red;
+  border: 1px solid rgb(208, 251, 206);
   color: rgb(202, 255, 121);
   display: inline-block;
   width: 30px;
@@ -40,7 +42,7 @@ body {
 .game-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5 columns */
-  grid-gap: 10px; /* Gap between cells */
-  width: 1%;
+  grid-gap: 1px; /* Gap between cells */
+  width: 100%;
   user-select: none;
 }

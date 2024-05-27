@@ -1,6 +1,7 @@
 "use strict";
 const gameContainer = document.querySelector(".game-container");
-const gridSize = 2;
+const inputSize = document.querySelector(".input-size");
+const gridSize = inputSize.value;
 
 let targetNumber = 1;
 let gameOver = false;

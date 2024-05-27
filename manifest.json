@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Schulte Table",
+  "version": "1.0.0",
+  "description": "Schulte Table. Improve fast reading and attention.",
+  "icons": {
+    "16": "images/icon-16.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    },
+    "default_popup": "popup.html"
+  }
+}
