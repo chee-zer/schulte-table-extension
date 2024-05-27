@@ -1,7 +1,16 @@
 "use strict";
 const gameContainer = document.querySelector(".game-container");
-const inputSize = document.querySelector(".input-size");
-const gridSize = inputSize.value;
+const inputSize = document.querySelectorAll(".input-size");
+const statusBox = document.querySelector(".status-box");
+let gridSize = 5;
+inputSize.forEach((element) => {
+  element.addEventListener("click", (e) => {
+    targetNumber = 1;
+    gameOver = false;
+    gridSize = element.id;
+    initializeGrid(element.id);
+  });
+});
 
 let targetNumber = 1;
 let gameOver = false;
@@ -13,22 +22,23 @@ let gameOver = false;
 //   .map((x) => x + 1)
 //   .sort(() => Math.random() - 0.5);
 
-//fisher yates shuffling array 🗿
-let gridNumbers = Array.from(Array(gridSize ** 2).keys()).map((x) => x + 1);
-const fisherYates = (arr) => {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * i);
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-};
-console.log(`${gridNumbers}`);
-gridNumbers = fisherYates(gridNumbers);
-console.log(`${gridNumbers}`);
-
 // Initialize the game grid
-function initializeGrid() {
-  gameContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+function initializeGrid(sizee) {
+  //fisher yates shuffling array 🗿
+  let gridNumbers = Array.from(Array(sizee ** 2).keys()).map((x) => x + 1);
+  const fisherYates = (arr) => {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * i);
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  };
+  console.log(`${gridNumbers}`);
+  gridNumbers = fisherYates(gridNumbers);
+  console.log(`${gridNumbers}`);
+  statusUpdater(`${sizee} is the size now`);
+  gameContainer.innerHTML = "";
+  gameContainer.style.gridTemplateColumns = `repeat(${sizee}, 1fr)`;
 
   for (const number of gridNumbers) {
     const cell = document.createElement("div");
@@ -39,6 +49,11 @@ function initializeGrid() {
   }
 }
 
+//update status
+function statusUpdater(message) {
+  statusBox.textContent = message;
+}
+
 // Handle cell click event
 function handleCellClick(event) {
   const clickedNumber = parseInt(event.target.textContent);
@@ -46,15 +61,18 @@ function handleCellClick(event) {
   if (clickedNumber === targetNumber) {
     event.target.removeEventListener("click", handleCellClick);
     event.target.classList.add("right");
+    statusUpdater("right");
     targetNumber++;
 
     if (targetNumber > gridSize ** 2) {
       gameOver = true;
-      console.log("YOU WON!!!");
+      statusUpdater("YOU WON!!!");
     }
   } else {
-    console.log("wrong");
+    statusUpdater("wrong");
+    event.target.classList.add("wrong");
+    setTimeout(() => event.target.classList.remove("wrong"), 1000);
   }
 }
 
-initializeGrid();
+initializeGrid(gridSize);
